@@ -17,6 +17,11 @@ public class LivechatUser extends User {
     private String userName;
 
 
+    public LivechatUser(){
+        super();
+    }
+
+
     public LivechatUser(String email, String password){
         super(email, password);
     }
