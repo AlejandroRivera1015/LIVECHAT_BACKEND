@@ -10,13 +10,19 @@ public class User {
 
     private String email;
     private String password;
+    private String role;
 
     public User() {
+        
     }
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public void setRole(String role){
+        this.role = role;
     }
 
 }
