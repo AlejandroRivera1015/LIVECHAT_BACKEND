@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-LivechatApplication<livechat>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.app.server.livechat.LivechatApplication",
+            "projectName": "livechat",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
