@@ -41,7 +41,7 @@ public class LivechatUserController {
         try {
             String response = livechatUserService.login(userFormCredentials.getEmail(), userFormCredentials.getPassword());
             System.out.println("resp"+response);
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response.toString(), HttpStatus.OK);
 
         
    
