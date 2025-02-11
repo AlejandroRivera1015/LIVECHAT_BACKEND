@@ -7,9 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.server.livechat.DTO.LivechatUserDTO;
 import com.app.server.livechat.Entity.User.LivechatUser;
-import com.app.server.livechat.Entity.User.User;
 import com.app.server.livechat.Repository.User.UserRepository;
 import com.app.server.livechat.Utils.JwtUtils;
 
