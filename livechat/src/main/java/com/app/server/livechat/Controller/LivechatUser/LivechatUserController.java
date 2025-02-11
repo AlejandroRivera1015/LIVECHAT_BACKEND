@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/auth")
@@ -42,8 +41,10 @@ public class LivechatUserController {
         try {
             String response = livechatUserService.login(userFormCredentials.getEmail(), userFormCredentials.getPassword());
             System.out.println("resp"+response);
-            return new ResponseEntity<>(response, HttpStatus.OK);
-            
+            return ResponseEntity.status(200).body(response);
+
+        
+   
         } catch (Exception e) {
             // TODO: handle exception
         }
