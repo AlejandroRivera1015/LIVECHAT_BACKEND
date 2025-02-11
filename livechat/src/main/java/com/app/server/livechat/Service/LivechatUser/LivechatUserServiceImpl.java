@@ -34,6 +34,8 @@ public class LivechatUserServiceImpl implements LivechatUserService {
                 claims.put("Role", userCredentials.get().getRole());
                 claims.put("UserName", userCredentials.get().getUserName());
 
+                
+
                 return jwtUtils.generateToken(claims);
 
         
