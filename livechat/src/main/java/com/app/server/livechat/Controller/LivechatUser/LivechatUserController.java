@@ -40,8 +40,11 @@ public class LivechatUserController {
     public ResponseEntity<?> loginRequest(@RequestBody User userFormCredentials) {
         try {
             String response = livechatUserService.login(userFormCredentials.getEmail(), userFormCredentials.getPassword());
-            return new ResponseEntity<>(new LivechatUserDTO(response), HttpStatus.OK);
 
+            if(response != null)
+            return new ResponseEntity<>(new LivechatUserDTO(response), HttpStatus.OK);
+            else
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
          
    
         } catch (Exception e) {
