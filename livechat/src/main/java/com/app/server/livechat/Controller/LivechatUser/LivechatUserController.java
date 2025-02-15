@@ -48,7 +48,7 @@ public class LivechatUserController {
             }
             else
             {
-                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 
             }
          
