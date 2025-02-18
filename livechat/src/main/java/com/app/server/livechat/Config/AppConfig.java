@@ -20,7 +20,6 @@ public class AppConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .addFilter(new JwtAuthValidatorFilter())
                 .build();
                 
     }
