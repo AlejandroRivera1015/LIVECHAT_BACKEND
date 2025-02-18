@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.app.server.livechat.Config.Security.JwtAuthValidatorFilter;
+
 @Configuration
 @EnableWebSecurity
 public class AppConfig {
@@ -18,6 +20,7 @@ public class AppConfig {
                         .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )
+                .addFilter(new JwtAuthValidatorFilter())
                 .build();
                 
     }
