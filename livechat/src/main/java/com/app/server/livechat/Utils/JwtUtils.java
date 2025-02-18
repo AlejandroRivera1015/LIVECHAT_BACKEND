@@ -34,10 +34,11 @@ public class JwtUtils {
             .compact();
     }
 
-    public void validateToken(String token){
+    public void  validateToken(String token){
         
         try {
-            Jwts.parserBuilder().setSigningKey(getSecret()).build().parseClaimsJws (token);
+            Jwts.parserBuilder().setSigningKey(getSecret()).build().parseClaimsJws(token);
+            System.out.println("los claims son" + Jwts.parserBuilder().setSigningKey(getSecret()).build().parseClaimsJws(token).getBody());
 
         } catch (Exception e) {
             System.out.println("error validating Token");
