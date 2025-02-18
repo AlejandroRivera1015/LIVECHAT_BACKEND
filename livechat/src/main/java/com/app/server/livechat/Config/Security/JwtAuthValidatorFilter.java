@@ -17,9 +17,16 @@ public class JwtAuthValidatorFilter extends OncePerRequestFilter {
             throws ServletException, IOException, java.io.IOException {
 
         String header = request.getHeader("Authorization");
-        System.out.println("header:"+header);
+        String jwtToken = header.substring(7);
+        System.out.println("token:"+jwtToken);
 
+        //TODO : validate the token
+        if(jwtToken != null && jwtToken.length() > 0){
 
+        
+        }
         filterChain.doFilter(request, response);
+
+
     }
 }
