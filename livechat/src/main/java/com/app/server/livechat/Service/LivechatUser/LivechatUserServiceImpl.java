@@ -33,6 +33,7 @@ public class LivechatUserServiceImpl implements LivechatUserService {
                 Map<String, String> claims = new HashMap<>();
                 claims.put("Role", userCredentials.get().getRole());
                 claims.put("UserName", userCredentials.get().getUserName());
+                claims.put("id", userCredentials.get().getId().toString());
 
                 
 

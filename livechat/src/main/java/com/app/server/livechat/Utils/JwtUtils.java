@@ -38,7 +38,6 @@ public class JwtUtils {
         
         try {
             Jwts.parserBuilder().setSigningKey(getSecret()).build().parseClaimsJws (token);
-                        System.out.println("ok validating Token");
 
         } catch (Exception e) {
             System.out.println("error validating Token");
