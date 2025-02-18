@@ -1,7 +1,10 @@
 package com.app.server.livechat.Config.Security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.app.server.livechat.Utils.JwtUtils;
 
 import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.FilterChain;
@@ -11,6 +14,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class JwtAuthValidatorFilter extends OncePerRequestFilter {
+
+    @Autowired
+    JwtUtils jwtUtils;
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -22,6 +29,7 @@ public class JwtAuthValidatorFilter extends OncePerRequestFilter {
 
         //TODO : validate the token
         if(jwtToken != null && jwtToken.length() > 0){
+            jwtUtils.validateToken(jwtToken);
 
         
         }
