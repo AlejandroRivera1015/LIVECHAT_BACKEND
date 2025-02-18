@@ -10,15 +10,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class JwtAuthValidatorFilter  extends OncePerRequestFilter {
+public class JwtAuthValidatorFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+            throws ServletException, IOException, java.io.IOException {
 
-                String header = request.getHeader("Authorization");
-                System.out.println(header);
+        String header = request.getHeader("Authorization");
+        System.out.println("header:"+header);
 
 
-    } 
+        filterChain.doFilter(request, response);
+    }
 }
