@@ -37,6 +37,8 @@ public class JwtUtils {
             .compact();
     }
 
+   
+   
     public Jws<Claims>  validateToken(String token){
         
         try {
@@ -47,10 +49,24 @@ public class JwtUtils {
         }
 
         return null;
-        
-
     }
 
+
+    public Long getIdByClaims(String authToken){
+
+        String token = authToken.substring(7);
+        Jws<Claims> userClaimsJws = this.validateToken(token);
+        Claims userClaims = userClaimsJws.getBody();
+
+
+        if(!userClaims.isEmpty()){
+            return  Long.parseLong( userClaims.get("id").toString());
+        }
+
+        return null;
+
+    
+    }
 
 
 
