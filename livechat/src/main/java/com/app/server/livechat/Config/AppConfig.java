@@ -28,6 +28,8 @@ public class AppConfig {
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthValidatorFilter, UsernamePasswordAuthenticationFilter.class)
+                .cors()
+                .and()
                 .build();
                 
     }
