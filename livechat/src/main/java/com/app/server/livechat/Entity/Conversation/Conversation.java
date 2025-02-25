@@ -4,11 +4,11 @@ import java.util.List;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
+
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
@@ -23,10 +23,8 @@ public class Conversation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
-    @JoinTable(name = "conversation_participants",
-    joinColumns = @JoinColumn(name = "conversation_id"),
-    inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ManyToMany(mappedBy = "conversations")
+    
     private List<LivechatUser> participants;
 
     @OneToMany(mappedBy = "conversation")
