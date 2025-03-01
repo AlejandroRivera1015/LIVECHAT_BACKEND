@@ -30,7 +30,7 @@ public class JwtUtils {
         SecretKey key = Keys.hmacShaKeyFor(decodedKey);
         return Jwts.builder()
             .setClaims(tokenClaims)
-            .setSubject(tokenClaims.get("UserName"))
+            .setSubject(tokenClaims.get("id"))
             .setIssuedAt(new Date(System.currentTimeMillis()))
             .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
             .signWith(key,SignatureAlgorithm.HS256)
@@ -40,12 +40,13 @@ public class JwtUtils {
    
    
     public Jws<Claims>  validateToken(String token){
+
         
         try {
             return Jwts.parserBuilder().setSigningKey(getSecret()).build().parseClaimsJws(token);
 
         } catch (Exception e) {
-            System.out.println("error validating Token");
+            System.out.println("JWTUTILS: "+e.getMessage());
         }
 
         return null;
