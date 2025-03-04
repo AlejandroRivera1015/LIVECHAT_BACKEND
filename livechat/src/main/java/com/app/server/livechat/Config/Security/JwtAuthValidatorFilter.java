@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.app.server.livechat.Service.CookiesService;
 import com.app.server.livechat.Utils.JwtUtils;
 
 import io.jsonwebtoken.Claims;
@@ -21,6 +22,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.io.IOException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -30,34 +32,43 @@ public class JwtAuthValidatorFilter extends OncePerRequestFilter {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired 
+    CookiesService cookiesService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException, java.io.IOException {
 
-        String header = request.getHeader("Authorization");
-        String jwtToken = header.substring(7);
-        System.out.println("token:"+jwtToken);
+        try {
 
-        //TODO : validate the token
-        if(jwtToken != null && jwtToken.length() > 0){
-            Jws<Claims> claims = jwtUtils.validateToken(jwtToken);
+            if(request.getRequestURI().contains("/auth/login")){
+                System.out.println("la url es para auth" + request.getRequestURI());
+                filterChain.doFilter(request, response);
+            }
 
-            if(claims != null){
-                System.out.println("los claims del filter" +claims.getBody());
-                Authentication auth = createAuthentication(claims.getBody());
-                System.out.println("auth es" +auth);
+            else{
 
-                SecurityContextHolder.getContext().setAuthentication(auth);
-                
+                for(Cookie cookie : request.getCookies()){
+
+                    if(cookie.getName().equals("auth-cookie")){
+                        String jwtToken = cookie.getValue();
+                        System.out.println("jwt recibido de la cookie" + jwtToken);  
+                        Jws<Claims> claims =  jwtUtils.validateToken(jwtToken);
+                        Authentication auth = createAuthentication(claims.getBody());
+                        SecurityContextHolder.getContext().setAuthentication(auth);
+
+
+                    }
+                    
+                }
+                filterChain.doFilter(request, response);
 
 
             }
 
-        
+        } catch (Exception e) {
+            System.out.println("JwtAuthValidatorFilter: Error validating token" + e.getMessage());
         }
-        filterChain.doFilter(request, response);
-
 
     }
 
@@ -67,10 +78,9 @@ public class JwtAuthValidatorFilter extends OncePerRequestFilter {
 
         authorities.add(new SimpleGrantedAuthority(claims.get("Role").toString()));
 
-        UserDetails userDetails = new User(claims.getSubject(), "", new ArrayList<>());
+        UserDetails userDetails = new User(claims.get("id").toString(), "", new ArrayList<>());
 
         return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
     }
 
-    
 }
