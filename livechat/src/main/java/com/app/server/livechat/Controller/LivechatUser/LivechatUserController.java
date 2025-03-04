@@ -7,13 +7,19 @@ import com.app.server.livechat.DTO.LivechatUserDTO;
 import com.app.server.livechat.Entity.User.LivechatUser;
 import com.app.server.livechat.Entity.User.User;
 import com.app.server.livechat.Repository.User.UserRepository;
+import com.app.server.livechat.Service.CookiesService;
 import com.app.server.livechat.Service.LivechatUser.LivechatUserServiceImpl;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+import java.net.http.HttpHeaders;
 import java.util.List;
 
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +29,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RequestMapping("/auth")
 public class LivechatUserController {
 
@@ -33,18 +39,19 @@ public class LivechatUserController {
     @Autowired
     UserRepository userRepository;
 
-
-
+    @Autowired
+    CookiesService cookiesService;
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginRequest(@RequestBody User userFormCredentials) {
+    public ResponseEntity<?> loginRequest(@RequestBody User userFormCredentials, HttpServletResponse  response) {
         try {
-            String response = livechatUserService.login(userFormCredentials.getEmail(), userFormCredentials.getPassword());
 
-            if(response != null)
-            {
-                return new ResponseEntity<>(new LivechatUserDTO(response), HttpStatus.OK);
 
+            String responseToken = livechatUserService.login(userFormCredentials.getEmail(), userFormCredentials.getPassword());
+            
+            if(responseToken != null){
+                cookiesService.addCookie("auth-cookie", responseToken, response);
+                    return new ResponseEntity<>(new LivechatUserDTO(responseToken), HttpStatus.OK);
             }
             else
             {
