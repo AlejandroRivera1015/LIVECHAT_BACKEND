@@ -3,10 +3,12 @@ package com.app.server.livechat.DTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @ToString
 @Getter
+@NoArgsConstructor
 public class LivechatUserDTO {
 
 
