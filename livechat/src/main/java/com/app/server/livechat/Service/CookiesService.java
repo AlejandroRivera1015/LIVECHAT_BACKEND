@@ -11,23 +11,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class CookiesService {
 
     public void addCookie(String name, String value, HttpServletResponse response){
-
-
         Cookie authCookie = new Cookie(name, value);
         authCookie.setHttpOnly(true);
         authCookie.setAttribute("SameSite", "Lax"); 
-
         authCookie.setSecure(false);
         authCookie.setPath("/");
         authCookie.setMaxAge(60*60*24*7);
-
         response.addCookie(authCookie);
-
-        
-
-
     }
-
-    //TODO : Implement the method deleteCookie
-
 }
