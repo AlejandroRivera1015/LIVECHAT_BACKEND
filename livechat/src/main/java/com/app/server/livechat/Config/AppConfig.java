@@ -45,7 +45,7 @@ public class AppConfig {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         System.out.println("CORS Configuration");
         corsConfiguration.setAllowedOriginPatterns(List.of("http://localhost:4200"));
-        corsConfiguration.setAllowedMethods(List.of("GET","POST","PUT","DELETE"));
+        corsConfiguration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         corsConfiguration.setAllowedHeaders(List.of("*"));
         corsConfiguration.setAllowCredentials(true);
 
