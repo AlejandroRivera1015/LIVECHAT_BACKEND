@@ -20,11 +20,11 @@ import lombok.Getter;
 public class JwtUtils {
 
     private Date expirationDate;
-    
     @Value("${livechat.security.jwt}")
     private String secret ;
 
     public String generateToken(Map<String,String> tokenClaims ){
+
 
         byte[] decodedKey = Base64.getDecoder().decode(getSecret());
         SecretKey key = Keys.hmacShaKeyFor(decodedKey);
@@ -37,11 +37,8 @@ public class JwtUtils {
             .compact();
     }
 
-   
-   
     public Jws<Claims>  validateToken(String token){
 
-        
         try {
             return Jwts.parserBuilder().setSigningKey(getSecret()).build().parseClaimsJws(token);
 
@@ -61,7 +58,7 @@ public class JwtUtils {
 
 
         if(!userClaims.isEmpty()){
-            return  Long.parseLong( userClaims.get("id").toString());
+                return  Long.parseLong( userClaims.get("id").toString());
         }
 
         return null;
