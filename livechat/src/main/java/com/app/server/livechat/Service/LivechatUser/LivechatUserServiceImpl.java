@@ -1,10 +1,7 @@
 package com.app.server.livechat.Service.LivechatUser;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,22 +25,33 @@ public class LivechatUserServiceImpl implements LivechatUserService {
 
 
     @Override
-    public String login(String email, String password){
-
-
+    public LivechatUserDTO login(String email, String password){
         try {
             Optional<LivechatUser> userCredentials = userRepository.findByEmailAndPassword(email, password);
             if (userCredentials.isPresent()) {
-
                 Map<String, String> claims = new HashMap<>();
                 claims.put("Role", userCredentials.get().getRole());
                 claims.put("id", userCredentials.get().getId().toString());
-                
-                return jwtUtils.generateToken(claims);
+                String token = jwtUtils.generateToken(claims);
+                System.out.println("token generado" + token);
+                Long userId = userCredentials.get().getId();
+                return new LivechatUserDTO(userId, token);
+            }
+            else{
+                return null;
+            }
+        } catch (Exception e) {
+            System.out.println("error finding user /" + e);
+        }
+        return null;
+    }
 
-        
-
-                
+    @Override
+    public Long getUserId(String email, String password) {
+        try {
+            Optional<LivechatUser> userCredentials = userRepository.findByEmailAndPassword(email, password);
+            if (userCredentials.isPresent()) {
+                return userCredentials.get().getId();
             }
             else{
                 return null;
@@ -55,28 +63,17 @@ public class LivechatUserServiceImpl implements LivechatUserService {
         return null;
     }
 
-  
-    
     @Override
-    public boolean validateUser(String token) {
-    
+    public boolean setWsId(Long userId,String wsId){ 
         try{
-            Jws<Claims> jwtClaims =jwtUtils.validateToken(token);
-            Claims claims = jwtClaims.getBody();
-            String authToken = claims.get("token").toString();
+            int user = userRepository.setWsId(userId, wsId);
 
-            if (claims != null && authToken.length()>0)  {
-                return true;
-                
-            }
-            
         }
         catch (Exception e) {
+            System.out.println("Error setting wsId /" + e);
             // Token invalid
             return false;
         }
         return false;
-
     }
-
 }

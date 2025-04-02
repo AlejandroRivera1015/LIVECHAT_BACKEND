@@ -1,13 +1,9 @@
 package com.app.server.livechat.Entity.User;
 
 import java.util.List;
-
-import org.hibernate.annotations.CollectionIdJdbcTypeCode;
-import org.hibernate.engine.internal.Cascade;
-
 import com.app.server.livechat.Entity.Conversation.Conversation;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -17,9 +13,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter
 public class LivechatUser extends User {
 
     @Id
@@ -27,16 +25,15 @@ public class LivechatUser extends User {
     private Long id;
 
     private String userName;
-    
 
-
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "livechatUsers_conversations", joinColumns =  @JoinColumn(name = "user_id", referencedColumnName = "id"),
         inverseJoinColumns =  @JoinColumn(name = "conversation_id", referencedColumnName = "id")
     )
-
     private List<Conversation> conversations;
+    
+    private String wsId;
     
 
 
@@ -53,9 +50,6 @@ public class LivechatUser extends User {
         super(email, password);
         this.userName = userName;
     }
-
-
-
 
 
 }

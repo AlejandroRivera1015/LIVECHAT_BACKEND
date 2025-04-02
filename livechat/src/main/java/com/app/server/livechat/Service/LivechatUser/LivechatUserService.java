@@ -8,6 +8,8 @@ import com.app.server.livechat.DTO.LivechatUserDTO;
 @Service
 public interface LivechatUserService {
 
-    String login(String email, String password);
+    LivechatUserDTO login(String email, String password);
+    boolean setWsId(Long userId, String wsId);
+    Long getUserId(String email, String password);
 
 }
