@@ -54,10 +54,13 @@ public class JwtAuthValidatorFilter extends OncePerRequestFilter {
                 for (Cookie cookie : request.getCookies()) {
                     if (cookie.getName().equals("auth-cookie")) {
                         String token = cookie.getValue();
+                        System.out.println("token de la cookie: " + token);
 
                         Jws<Claims> claims = jwtUtils.validateToken(token);
 
-                        if(!claims.getBody().isEmpty() && claims != null){
+                        System.out.println("claims: " + claims);
+
+                        if(claims != null && !claims.getBody().isEmpty() ){
                             System.out.println("token validado");
                             auth = createAuthentication(claims.getBody());
                             SecurityContextHolder.getContext().setAuthentication(auth);
