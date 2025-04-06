@@ -22,7 +22,6 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor
 @Getter
-@ToString
 @NoArgsConstructor
 public class Message {
 
@@ -38,6 +37,12 @@ public class Message {
     private Long sender;
     private Long receiver;
     private String createAt;
+
+    @Override
+    public String toString() {
+        return "Message [id=" + id + ", conversation=" + conversation + ", message=" + message + ", sender=" + sender
+                + ", receiver=" + receiver + ", createAt=" + createAt + "]";
+    }
 
 
     public Message(Conversation conversation, String message, Long sender, Long receiver, String createAt) {

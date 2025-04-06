@@ -22,7 +22,6 @@ import lombok.ToString;
 
 @Entity
 @Setter
-@ToString
 @Getter
 @NoArgsConstructor
 public class Conversation {
@@ -40,10 +39,15 @@ public class Conversation {
     private List<Message> conversationMessages;
 
 
+    @Override
+    public String toString(){
+            return "Conversation [id=" + id + ", participants=" + participants + "]";
+    }
 
     public Conversation(List<LivechatUser> partiLivechatUsers){
         this.participants = partiLivechatUsers;
     }
+
 
 
 
