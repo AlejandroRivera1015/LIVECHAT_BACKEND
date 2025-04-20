@@ -1,8 +1,8 @@
 package com.app.server.livechat.Entity.User;
 
 import java.util.List;
+
 import com.app.server.livechat.Entity.Conversation.Conversation;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -14,6 +14,7 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -49,6 +50,10 @@ public class LivechatUser extends User {
     public LivechatUser(String email, String password, String userName){
         super(email, password);
         this.userName = userName;
+    }
+
+    public String  toString(){
+        return "LivechatUser [id=" + id + ", userName=" + userName + "]";
     }
 
 

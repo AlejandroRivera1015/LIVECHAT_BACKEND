@@ -5,11 +5,9 @@ import java.util.List;
 import com.app.server.livechat.Entity.Message.Message;
 import com.app.server.livechat.Entity.User.LivechatUser;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -21,8 +19,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Setter
 @Getter
+@Setter
 @NoArgsConstructor
 public class Conversation {
 
@@ -41,7 +39,7 @@ public class Conversation {
 
     @Override
     public String toString(){
-            return "Conversation [id=" + id + ", participants=" + participants + "]";
+            return "Conversation [conversationId=" + this.id + "]";
     }
 
     public Conversation(List<LivechatUser> partiLivechatUsers){
