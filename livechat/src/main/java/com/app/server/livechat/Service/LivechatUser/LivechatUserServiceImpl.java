@@ -67,6 +67,7 @@ public class LivechatUserServiceImpl implements LivechatUserService {
     public boolean setWsId(Long userId,String wsId){ 
         try{
             int user = userRepository.setWsId(userId, wsId);
+            System.out.println("setWsId: " + wsId);
 
         }
         catch (Exception e) {
@@ -76,4 +77,12 @@ public class LivechatUserServiceImpl implements LivechatUserService {
         }
         return false;
     }
+
+    public String getWsId(Long userId){
+        try{
+            return userRepository.findWsIdById(userId);
+        }catch (Exception e) {
+            return null;
+    }
+}
 }
