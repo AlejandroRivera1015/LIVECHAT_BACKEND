@@ -26,14 +26,24 @@ public class ConversationsController {
     
     @GetMapping("/all")
     public ResponseEntity<?> getUserAllConversations(@RequestParam("userId") Long userId, HttpServletRequest request){
-     /*    String requestId = UUID.randomUUID().toString().substring(0, 8);
-        System.out.println("Ejecutando getUserAllConversations [" + requestId + "] - userId: " + userId 
-                        + " - Thread: " + Thread.currentThread().getId()
-                        + " - Path: " + request.getRequestURI() 
-                        + " - QueryString: " + request.getQueryString());
-        */
+  
         List<Conversation> conversations = conversationServices.getAllUserConversations(userId);
+        System.out.println("Conversations: " + conversations.toString());
         return new ResponseEntity<>(conversations, HttpStatus.OK);
         
+    }
+
+    @GetMapping("/match")
+    public ResponseEntity<?> findConversation(@RequestParam("user") String userId, @RequestParam("contact") String contactId){
+        try{
+            System.out.println("Finding conversation between user: " + userId + " and contact: " + contactId);
+            Long conversationId = conversationServices.matchUsersConversations(Long.parseLong(userId), Long.parseLong(contactId) );
+            return new ResponseEntity<>(conversationId, HttpStatus.OK);
+
+        }catch (Exception e){
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
