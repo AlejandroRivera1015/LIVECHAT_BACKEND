@@ -23,4 +23,8 @@ public interface UserRepository extends JpaRepository<LivechatUser, Long> {
 
     public Optional<LivechatUser> findById(Long id);
 
+    @Query("SELECT u.wsId FROM LivechatUser u WHERE u.id = :id")
+    public String findWsIdById(Long id);
+
+    public Optional<LivechatUser> findByEmail(String email);
 }
