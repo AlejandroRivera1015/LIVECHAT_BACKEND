@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.ToString;
 @Getter
 @MappedSuperclass
-@ToString
 public class User {
 
     private String email;
