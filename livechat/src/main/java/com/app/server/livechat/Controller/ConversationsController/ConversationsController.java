@@ -1,5 +1,6 @@
 package com.app.server.livechat.Controller.ConversationsController;
 
+import com.app.server.livechat.Entity.User.LivechatUser;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,6 +44,19 @@ public class ConversationsController {
         }catch (Exception e){
             System.out.println("Error: " + e.getMessage());
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
+
+    @GetMapping("/participants")
+    public  ResponseEntity<?> getConversationParticipants(@RequestParam("conversationId") Long conversationId){
+        try{
+            List<Long> participants = conversationServices.getConversationParticipants(conversationId);
+            return  new ResponseEntity<>(participants, HttpStatus.OK);
+        //TODO
+        }catch (Exception e){
+                return  new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
     }
