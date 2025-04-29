@@ -33,7 +33,9 @@ public class LivechatUser extends User {
         inverseJoinColumns =  @JoinColumn(name = "conversation_id", referencedColumnName = "id")
     )
     private List<Conversation> conversations;
-    
+
+    private String userImg ;
+
     private String wsId;
     
 
