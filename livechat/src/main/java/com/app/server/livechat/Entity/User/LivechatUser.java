@@ -33,7 +33,7 @@ public class LivechatUser extends User {
     )
     private List<Conversation> conversations;
 
-    private String userImg ;
+    private String userImg;
 
     private String wsId;
     
